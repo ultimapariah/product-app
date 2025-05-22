@@ -8,10 +8,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::middleware(['auth', 'verified'])->group(function(){
 
-Route::view('dashboard', [ProductController::class, 'index'])
+Route::get('dashboard', [ProductController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::get('/products/{product}', [ProductController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('products.show');
+    
+});
 
 //Route::view('dashboard', 'dashboard')
 //   ->middleware(['auth', 'verified'])
